@@ -1,0 +1,5 @@
+body { min-height: 100vh; }
+.navbar-brand { display: flex; align-items: center; gap: .5rem; font-weight: 600; }
+.navbar-brand img { height: 26px; }
+.card { border-radius: .6rem; }
+table.table th { white-space: nowrap; }

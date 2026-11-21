@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}<h3>Reschedule Booking B{{b.id}}</h3>
+<p>{{b.sname}} · {{b.ename}} · currently {{b.date}} {{b.start_time}}-{{b.end_time}} ({{b.examiner}})</p>
+<form method="post" class="card card-body col-md-6"><label class="form-label">Move to slot</label>
+<select name="slot_id" class="form-select mb-3" required>{% for s in slots %}<option value="{{s.id}}">{{s.date}} {{s.start_time}}-{{s.end_time}} · {{s.examiner}} · {{s.available}} seats</option>{% else %}<option value="">No other slots</option>{% endfor %}</select>
+<button class="btn btn-primary">Reschedule</button></form>
+{% endblock %}

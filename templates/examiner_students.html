@@ -1,0 +1,5 @@
+{% extends 'base.html' %}{% block content %}<h3>Students in slot #{{s.id}} <small class="text-muted">{{e.name}} · {{s.date}} {{s.start_time}}-{{s.end_time}}</small></h3>
+<table class="table bg-white"><tr><th>ID</th><th>Name</th><th>Roll</th><th>Email</th><th>Status</th><th>Marks</th><th></th></tr>
+{% for b in rows %}<tr><td>S{{b.student_id}}</td><td>{{b.sname}}</td><td>{{b.roll_no}}</td><td>{{b.email}}</td><td>{{b.status}}</td><td>{{b.marks if b.evaluated}}</td>
+<td><a class="btn btn-sm btn-primary" href="{{url_for('examiner.examiner_evaluate',bid=b.id)}}">{{'Re-evaluate' if b.evaluated else 'Evaluate'}}</a></td></tr>{% else %}<tr><td colspan="7" class="text-muted">No students booked</td></tr>{% endfor %}</table>
+{% endblock %}

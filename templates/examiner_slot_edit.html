@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block content %}<h3>Edit Slot #{{s.id}}</h3>
+<form method="post" class="card card-body col-md-6">
+<label class="form-label">Date</label><input type="date" name="date" value="{{s.date}}" class="form-control mb-2" required>
+<label class="form-label">Start</label><input type="time" name="start_time" value="{{s.start_time}}" class="form-control mb-2" required>
+<label class="form-label">End</label><input type="time" name="end_time" value="{{s.end_time}}" class="form-control mb-2" required>
+<label class="form-label">Capacity</label><input type="number" min="1" name="capacity" value="{{s.capacity}}" class="form-control mb-2" required>
+<label class="form-label">Room</label><input name="location" value="{{s.location or ''}}" class="form-control mb-3">
+<button class="btn btn-primary">Save</button></form>
+{% endblock %}

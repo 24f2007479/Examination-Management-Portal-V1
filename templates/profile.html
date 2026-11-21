@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% block content %}
+<div class="col-md-6"><h4>Edit Profile</h4><form method="post" class="card card-body">
+<label class="form-label">Name</label><input name="name" value="{{g.user.name}}" class="form-control mb-2" required>
+<label class="form-label">Email</label><input value="{{g.user.email}}" class="form-control mb-2" disabled>
+<label class="form-label">Contact</label><input name="contact" value="{{g.user.contact or ''}}" class="form-control mb-2">
+<label class="form-label">Department</label><input name="department" value="{{g.user.department or ''}}" class="form-control mb-2">
+<label class="form-label">Roll no.</label><input name="roll_no" value="{{g.user.roll_no or ''}}" class="form-control mb-2">
+<label class="form-label">New password (optional)</label><input type="password" name="password" class="form-control mb-3">
+<button class="btn btn-primary">Save</button></form></div>
+{% endblock %}

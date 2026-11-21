@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% block content %}<h3>Examiner Dashboard</h3>
+<div class="row g-3 mb-4"><div class="col-md-3"><div class="card text-center"><div class="card-body"><div class="display-6">{{exams|length}}</div>Assigned exams</div></div></div>
+<div class="col-md-3"><div class="card text-center"><div class="card-body"><div class="display-6">{{slots|length}}</div>Slots created</div></div></div>
+<div class="col-md-3"><div class="card text-center"><div class="card-body"><div class="display-6">{{booked}}</div>Students booked</div></div></div>
+<div class="col-md-3"><div class="card text-center"><div class="card-body"><div class="display-6">{{pending}}</div>Pending evaluations</div></div></div></div>
+<h5>Assigned Examinations</h5><table class="table bg-white"><tr><th>Exam</th><th>Course</th><th>Type</th><th>Status</th><th>Slot creation window</th></tr>
+{% for e in exams %}<tr><td>{{e.name}}</td><td>{{e.cname}}</td><td>{{e.exam_type}}</td><td>{{e.status}}</td><td>{{e.slot_start or '-'}} → {{e.slot_end or '-'}}</td></tr>{% else %}<tr><td colspan="5" class="text-muted">None assigned yet</td></tr>{% endfor %}</table>
+<h5>My Slots</h5><table class="table bg-white"><tr><th>Exam</th><th>Date</th><th>Time</th><th>Seats</th><th>Status</th><th></th></tr>
+{% for s in slots %}<tr><td>{{s.ename}}</td><td>{{s.date}}</td><td>{{s.start_time}}-{{s.end_time}}</td><td>{{s.available}}/{{s.capacity}}</td><td>{{s.status}}</td><td><a class="btn btn-sm btn-outline-primary" href="{{url_for('examiner.examiner_slot_students',sid=s.id)}}">Students</a></td></tr>{% endfor %}</table>
+{% endblock %}

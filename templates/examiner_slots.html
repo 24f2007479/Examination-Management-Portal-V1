@@ -1,0 +1,15 @@
+{% extends 'base.html' %}{% block content %}<h3>My Slots</h3>
+<form method="post" class="card card-body mb-4"><b class="mb-2">Create slot (only while slot creation is open)</b><div class="row g-2">
+<div class="col-md-3"><select name="exam_id" class="form-select" required>{% for e in exams %}<option value="{{e.id}}">{{e.name}} [{{e.status}}]</option>{% endfor %}</select></div>
+<div class="col-md-2"><input type="date" name="date" class="form-control" required></div>
+<div class="col-md-2"><input type="time" name="start_time" class="form-control" required></div>
+<div class="col-md-2"><input type="time" name="end_time" class="form-control" required></div>
+<div class="col-md-1"><input type="number" min="1" name="capacity" class="form-control" placeholder="Cap" required></div>
+<div class="col-md-1"><input name="location" class="form-control" placeholder="Room"></div>
+<div class="col-md-1"><button class="btn btn-primary w-100">Add</button></div></div></form>
+<table class="table table-striped bg-white"><tr><th>Exam</th><th>Date</th><th>Time</th><th>Room</th><th>Seats</th><th>Status</th><th></th></tr>
+{% for s in slots %}<tr><td>{{s.ename}}</td><td>{{s.date}}</td><td>{{s.start_time}}-{{s.end_time}}</td><td>{{s.location}}</td><td>{{s.available}}/{{s.capacity}}</td><td>{{s.status}}</td><td class="text-nowrap">
+<a class="btn btn-sm btn-outline-success" href="{{url_for('examiner.examiner_slot_students',sid=s.id)}}">Students</a>
+{% if s.estatus in ('Draft','Slot Creation') %}<a class="btn btn-sm btn-outline-primary" href="{{url_for('examiner.examiner_slot_edit',sid=s.id)}}">Edit</a>
+<form class="d-inline" method="post" action="{{url_for('examiner.examiner_slot_delete',sid=s.id)}}" onsubmit="return confirm('Remove slot?')"><button class="btn btn-sm btn-outline-danger">Remove</button></form>{% endif %}</td></tr>{% endfor %}</table>
+{% endblock %}

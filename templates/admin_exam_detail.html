@@ -1,0 +1,24 @@
+{% extends 'base.html' %}{% block content %}
+<div class="d-flex justify-content-between"><h3>{{e.name}} <small class="text-muted">{{e.code}} - {{e.cname}}</small></h3>
+<div><a class="btn btn-outline-primary" href="{{url_for('admin.admin_exam_form',eid=e.id)}}">Edit</a>
+<form class="d-inline" method="post" action="{{url_for('admin.admin_exam_delete',eid=e.id)}}" onsubmit="return confirm('Delete exam?')"><button class="btn btn-outline-danger">Delete</button></form></div></div>
+<p>{{e.exam_type}} · {{e.duration}} min · {{e.max_marks}} marks · Status: <span class="badge bg-primary">{{e.status}}</span><br>
+Slot creation: {{e.slot_start or '-'}} → {{e.slot_end or '-'}} | Booking: {{e.book_start or '-'}} → {{e.book_end or '-'}}</p>
+<div class="card card-body mb-4"><b>Timeline control</b><div class="mt-2">
+{% for s,label in statuses.items() %}<form class="d-inline" method="post" action="{{url_for('admin.admin_exam_status',eid=e.id,s=s)}}"><button class="btn btn-sm {{'btn-primary' if e.status==s else 'btn-outline-secondary'}} mb-1">{{label}}</button></form> {% endfor %}
+<form class="d-inline" method="post" action="{{url_for('admin.admin_exam_publish',eid=e.id)}}"><button class="btn btn-sm btn-success mb-1">{{'Unpublish' if e.published else 'Publish'}} Results</button></form></div></div>
+<div class="row"><div class="col-md-7"><h5>Rubrics <small class="text-muted">(total max {{rtotal}} / exam {{e.max_marks}})</small></h5>
+<table class="table table-sm bg-white"><tr><th>Criterion</th><th>Max</th><th>Weight %</th><th>Description</th><th></th></tr>
+{% for r in rubrics %}<tr><td>{{r.criterion}}</td><td>{{r.max_marks}}</td><td>{{r.weightage}}</td><td>{{r.description}}</td>
+<td><form method="post" action="{{url_for('admin.admin_rubric_delete',rid=r.id)}}"><button class="btn btn-sm btn-outline-danger">x</button></form></td></tr>{% endfor %}</table>
+<form method="post" action="{{url_for('admin.admin_rubric_add',eid=e.id)}}" class="row g-2"><div class="col-4"><input name="criterion" class="form-control" placeholder="Criterion" required></div>
+<div class="col-2"><input name="max_marks" type="number" step="0.5" min="0" class="form-control" placeholder="Max" required></div>
+<div class="col-2"><input name="weightage" type="number" step="0.1" min="0" class="form-control" placeholder="Wt%"></div>
+<div class="col-3"><input name="description" class="form-control" placeholder="Description"></div><div class="col-1"><button class="btn btn-primary">+</button></div></form></div>
+<div class="col-md-5"><h5>Assigned Examiners</h5><ul class="list-group mb-2">
+{% for u in assigned %}<li class="list-group-item d-flex justify-content-between">{{u.name}}<form method="post" action="{{url_for('admin.admin_unassign',eid=e.id,uid=u.id)}}"><button class="btn btn-sm btn-outline-danger">remove</button></form></li>{% else %}<li class="list-group-item text-muted">None</li>{% endfor %}</ul>
+<form method="post" action="{{url_for('admin.admin_assign',eid=e.id)}}" class="d-flex gap-2"><select name="examiner_id" class="form-select" required>{% for u in avail %}<option value="{{u.id}}">{{u.name}}</option>{% endfor %}</select><button class="btn btn-primary">Assign</button></form></div></div>
+<h5 class="mt-4">Slots</h5>
+<table class="table table-sm bg-white"><tr><th>ID</th><th>Date</th><th>Time</th><th>Examiner</th><th>Seats</th><th>Status</th></tr>
+{% for s in slots %}<tr><td>{{s.id}}</td><td>{{s.date}}</td><td>{{s.start_time}}-{{s.end_time}}</td><td>{{s.ename}}</td><td>{{s.available}}/{{s.capacity}}</td><td>{{s.status}}</td></tr>{% else %}<tr><td colspan="6" class="text-muted">No slots</td></tr>{% endfor %}</table>
+{% endblock %}

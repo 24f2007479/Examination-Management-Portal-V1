@@ -1,0 +1,8 @@
+{% extends 'base.html' %}{% block content %}<h3>{{e.name}} <small class="text-muted">{{e.code}} · {{e.cname}}</small></h3>
+<p>{{e.exam_type}} · {{e.duration}} min · {{e.max_marks}} marks · Venue: {{e.venue or '-'}} · Status: <b>{{e.status}}</b><br>Booking window: {{e.book_start or '-'}} → {{e.book_end or '-'}}<br>{{e.instructions}}</p>
+{% if rubrics %}<h6>Evaluation criteria</h6><ul>{% for r in rubrics %}<li>{{r.criterion}} ({{r.max_marks}} marks)</li>{% endfor %}</ul>{% endif %}
+{% if mine %}<div class="alert alert-info">You have booked a slot for this exam.</div>{% endif %}
+<h5>Slots</h5><table class="table bg-white"><tr><th>Date</th><th>Time</th><th>Examiner</th><th>Room</th><th>Seats</th><th>Status</th><th></th></tr>
+{% for s in slots %}<tr><td>{{s.date}}</td><td>{{s.start_time}}-{{s.end_time}}</td><td>{{s.examiner}}</td><td>{{s.location}}</td><td>{{s.available}}/{{s.capacity}}</td><td>{{s.status}}</td>
+<td>{% if can_book and s.status=='Available' and not mine %}<form method="post" action="{{url_for('student.student_book',sid=s.id)}}"><button class="btn btn-sm btn-success">Book</button></form>{% endif %}</td></tr>{% else %}<tr><td colspan="7" class="text-muted">No slots yet</td></tr>{% endfor %}</table>
+{% endblock %}

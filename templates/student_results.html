@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}<h3>Published Results</h3>
+{% for b in rows %}<div class="card mb-3"><div class="card-body"><h5>{{b.ename}} <span class="badge bg-success">{{b.marks}} / {{mx[b.id]}}</span></h5>
+<div class="text-muted">{{b.date}} · Examiner: {{b.examiner}}</div>
+{% if det[b.id] %}<table class="table table-sm mt-2 w-auto"><tr><th>Criterion</th><th>Marks</th></tr>{% for d in det[b.id] %}<tr><td>{{d.criterion}}</td><td>{{d.marks}} / {{d.max_marks}}</td></tr>{% endfor %}</table>{% endif %}
+<p class="mb-0"><b>Remarks:</b> {{b.remarks or '-'}}</p></div></div>{% else %}<p class="text-muted">No published results yet.</p>{% endfor %}
+{% endblock %}

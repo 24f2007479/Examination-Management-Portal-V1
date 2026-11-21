@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block content %}
+<div class="alert alert-warning"><h5>Account {{g.user.status}}</h5>
+{% if g.user.status=='Pending' %}Your examiner account is awaiting Admin approval.{% else %}Your account has been deactivated. Contact the Admin.{% endif %}</div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block content %}<h3>Welcome, {{g.user.name}}</h3>
+<div class="row"><div class="col-md-6"><h5>Available Examinations (booking open)</h5><ul class="list-group mb-4">
+{% for e in avail %}<li class="list-group-item d-flex justify-content-between">{{e.name}} <small>{{e.cname}} · till {{e.book_end or '-'}}</small><a href="{{url_for('student.student_exam',eid=e.id)}}">View/Book</a></li>{% else %}<li class="list-group-item text-muted">None right now</li>{% endfor %}</ul>
+<h5>Available Slots</h5><ul class="list-group mb-4">{% for s in slots %}<li class="list-group-item d-flex justify-content-between">{{s.ename}} · {{s.date}} {{s.start_time}} <span class="badge bg-success">{{s.available}} seats</span></li>{% else %}<li class="list-group-item text-muted">None</li>{% endfor %}</ul></div>
+<div class="col-md-6"><h5>Upcoming / Booked</h5><ul class="list-group mb-4">{% for b in upcoming %}<li class="list-group-item">{{b.ename}} · {{b.date}} {{b.start_time}}-{{b.end_time}} · {{b.examiner}}</li>{% else %}<li class="list-group-item text-muted">No upcoming exams</li>{% endfor %}</ul>
+<h5>Published Results</h5><ul class="list-group">{% for b in results %}<li class="list-group-item">{{b.ename}} — <b>{{b.marks}}</b></li>{% else %}<li class="list-group-item text-muted">None yet</li>{% endfor %}</ul></div></div>
+{% endblock %}

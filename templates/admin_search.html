@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}<h3>Search results for "{{t}}"</h3>
+<h5>Students</h5><table class="table table-sm bg-white">{% for u in students %}<tr><td>S{{u.id}}</td><td>{{u.name}}</td><td>{{u.roll_no}}</td><td>{{u.email}}</td></tr>{% else %}<tr><td class="text-muted">None</td></tr>{% endfor %}</table>
+<h5>Examiners</h5><table class="table table-sm bg-white">{% for u in examiners %}<tr><td>E{{u.id}}</td><td>{{u.name}}</td><td>{{u.department}}</td><td>{{u.status}}</td></tr>{% else %}<tr><td class="text-muted">None</td></tr>{% endfor %}</table>
+<h5>Examinations</h5><table class="table table-sm bg-white">{% for e in exams %}<tr><td>{{e.id}}</td><td>{{e.code}}</td><td><a href="{{url_for('admin.admin_exam_detail',eid=e.id)}}">{{e.name}}</a></td><td>{{e.status}}</td></tr>{% else %}<tr><td class="text-muted">None</td></tr>{% endfor %}</table>
+<h5>Bookings</h5>{% set rows=bookings %}{% include '_bookings_table.html' %}
+{% endblock %}

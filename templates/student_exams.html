@@ -1,0 +1,8 @@
+{% extends 'base.html' %}{% block content %}<h3>Examinations</h3>
+<form class="row g-2 mb-3"><div class="col-md-4"><input name="q" value="{{t}}" class="form-control" placeholder="Search name/course"></div>
+<div class="col-md-3"><select name="type" class="form-select"><option value="">All types</option>{% for x in types %}<option {{'selected' if ty==x}}>{{x}}</option>{% endfor %}</select></div>
+<div class="col-md-3"><select name="course" class="form-select"><option value="">All courses</option>{% for c in courses %}<option value="{{c.id}}" {{'selected' if cid==c.id|string}}>{{c.code}}</option>{% endfor %}</select></div>
+<div class="col-md-2"><button class="btn btn-primary w-100">Filter</button></div></form>
+<table class="table table-striped bg-white"><tr><th>Course</th><th>Exam</th><th>Type</th><th>Duration</th><th>Max</th><th>Booking</th><th>Status</th><th></th></tr>
+{% for e in exams %}<tr><td>{{e.code}}</td><td>{{e.name}}</td><td>{{e.exam_type}}</td><td>{{e.duration}}m</td><td>{{e.max_marks}}</td><td>{{e.book_start or '-'}} → {{e.book_end or '-'}}</td><td>{{e.status}}</td><td><a class="btn btn-sm btn-outline-primary" href="{{url_for('student.student_exam',eid=e.id)}}">Open</a></td></tr>{% else %}<tr><td colspan="8" class="text-muted">No examinations found</td></tr>{% endfor %}</table>
+{% endblock %}

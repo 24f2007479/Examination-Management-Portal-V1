@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}
+<div class="d-flex justify-content-between"><h3>Examinations</h3><a class="btn btn-primary" href="{{url_for('admin.admin_exam_form')}}">+ New Examination</a></div>
+<table class="table table-striped bg-white mt-3"><tr><th>ID</th><th>Course</th><th>Name</th><th>Type</th><th>Max</th><th>Status</th><th>Results</th><th></th></tr>
+{% for e in exams %}<tr><td>{{e.id}}</td><td>{{e.code}}</td><td>{{e.name}}</td><td>{{e.exam_type}}</td><td>{{e.max_marks}}</td><td><span class="badge bg-secondary">{{e.status}}</span></td><td>{{'Published' if e.published else '-'}}</td>
+<td><a class="btn btn-sm btn-outline-primary" href="{{url_for('admin.admin_exam_detail',eid=e.id)}}">Manage</a></td></tr>{% endfor %}</table>
+{% endblock %}

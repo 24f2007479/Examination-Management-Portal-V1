@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block content %}<h3>Evaluate: {{b.sname}} <small class="text-muted">{{e.name}} (max {{e.max_marks}})</small></h3>
+<form method="post" class="card card-body col-md-8">
+{% if rubrics %}<table class="table table-sm"><tr><th>Criterion</th><th>Weight</th><th>Max</th><th style="width:140px">Marks</th></tr>
+{% for r in rubrics %}<tr><td>{{r.criterion}}<div class="small text-muted">{{r.description}}</div></td><td>{{r.weightage}}%</td><td>{{r.max_marks}}</td>
+<td><input type="number" step="0.5" min="0" max="{{r.max_marks}}" name="r{{r.id}}" value="{{old.get(r.id,'')}}" class="form-control" required></td></tr>{% endfor %}</table>
+{% else %}<label class="form-label">Total marks (no rubrics defined)</label><input type="number" step="0.5" min="0" max="{{e.max_marks}}" name="total" value="{{b.marks if b.evaluated}}" class="form-control mb-3" required>{% endif %}
+<label class="form-label">Remarks</label><textarea name="remarks" class="form-control mb-3" rows="3">{{b.remarks or ''}}</textarea>
+<button class="btn btn-primary">Submit marks</button></form>
+{% endblock %}

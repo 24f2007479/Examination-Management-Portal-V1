@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block content %}<h3>Students</h3>
+<table class="table table-striped bg-white"><tr><th>ID</th><th>Name</th><th>Roll</th><th>Email</th><th>Contact</th><th>Bookings</th></tr>
+{% for u in rows %}<tr><td>S{{u.id}}</td><td>{{u.name}}</td><td>{{u.roll_no}}</td><td>{{u.email}}</td><td>{{u.contact}}</td><td>{{u.nb}}</td></tr>{% endfor %}</table>
+{% endblock %}

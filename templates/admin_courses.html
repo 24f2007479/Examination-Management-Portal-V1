@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% block content %}
+<h3>Courses</h3>
+<form method="post" {% if course %}action="{{url_for('admin.admin_course_edit',cid=course.id)}}"{% endif %} class="card card-body mb-4"><div class="row g-2">
+<div class="col-md-2"><input name="code" class="form-control" placeholder="Code" value="{{course.code if course}}" required></div>
+<div class="col-md-3"><input name="name" class="form-control" placeholder="Course name" value="{{course.name if course}}" required></div>
+<div class="col-md-3"><input name="description" class="form-control" placeholder="Description" value="{{course.description or '' if course}}"></div>
+<div class="col-md-1"><input name="credits" type="number" min="0" class="form-control" value="{{course.credits if course else 3}}"></div>
+<div class="col-md-2"><select name="status" class="form-select"><option {{'selected' if course and course.status=='Active'}}>Active</option><option {{'selected' if course and course.status=='Inactive'}}>Inactive</option></select></div>
+<div class="col-md-1"><button class="btn btn-primary w-100">{{'Update' if course else 'Add'}}</button></div></div></form>
+<table class="table table-striped bg-white"><tr><th>ID</th><th>Code</th><th>Name</th><th>Description</th><th>Credits</th><th>Status</th><th></th></tr>
+{% for c in courses %}<tr><td>{{c.id}}</td><td>{{c.code}}</td><td>{{c.name}}</td><td>{{c.description}}</td><td>{{c.credits}}</td><td>{{c.status}}</td>
+<td class="text-nowrap"><a class="btn btn-sm btn-outline-primary" href="{{url_for('admin.admin_course_edit',cid=c.id)}}">Edit</a>
+<form class="d-inline" method="post" action="{{url_for('admin.admin_course_delete',cid=c.id)}}" onsubmit="return confirm('Delete?')"><button class="btn btn-sm btn-outline-danger">Delete</button></form></td></tr>{% endfor %}</table>
+{% endblock %}

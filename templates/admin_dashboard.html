@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block content %}<h3>Admin Dashboard</h3>
+<div class="row g-3 mt-1">{% for k,v in stats.items() %}<div class="col-6 col-md-3"><div class="card text-center shadow-sm"><div class="card-body"><div class="display-6">{{v}}</div><div class="text-muted">{{k}}</div></div></div></div>{% endfor %}</div>
+{% if stats['Pending Examiners'] %}<div class="alert alert-info mt-4">{{stats['Pending Examiners']}} examiner(s) awaiting approval. <a href="{{url_for('admin.admin_examiners')}}">Review</a></div>{% endif %}
+{% endblock %}
